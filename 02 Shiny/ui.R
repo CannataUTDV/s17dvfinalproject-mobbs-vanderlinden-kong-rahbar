@@ -25,7 +25,8 @@ dashboardPage(
             uiOutput("nonaggstates"),
             actionButton(inputId = "nonaggaction", label="Get Data"),
             DT::dataTableOutput("nonaggdata")
-          )
+          ),
+          tabPanel("Non-Aggregated Measure", "This is a Non-Aggregated Measures Analysis for stations per capita per format")
         )
       ),
       
