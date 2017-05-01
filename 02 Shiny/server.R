@@ -8,6 +8,14 @@ require(readr)
 require(DT)
 
 # The following query is for the select list in the Barcharts tab.
+
+nonaggstates = query(
+  data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
+  dataset="jacobv/s-17-dv-final-project", type="sql",
+  query="select Distinct State as States
+  from `PostETL-Radio`"
+)
+
 regions2 = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
   dataset="jacobv/s-17-dv-final-project", type="sql",
@@ -64,6 +72,8 @@ region_list3b <- as.list(regions3b$D, regions3b$R)
 
 shinyServer(function(input, output) { 
   
+  output$nonaggstates <- renderUI({selectInput("nonaggselect", "Choose States:", nonaggstates, multiple = TRUE)})
+  
   # These widgets are for the Barcharts tab.
   online2 = reactive({input$rb2})
   output$regions2 <- renderUI({selectInput("selectedRegions", "Choose Regions:", region_list, multiple = TRUE) })
@@ -80,6 +90,11 @@ shinyServer(function(input, output) {
   
   # These widgets are for the crosstabs tab.
   online5 = reactive({input$rb5})
+  
+  # Non-agg tab
+  nonaggdf <- eventReactive(input$nonaggaction, {
+    # Non-agg stuff here
+  })
   
   # Begin Barchart Tab ------------------------------------------------------------------
   df2 <- eventReactive(input$click2, {
