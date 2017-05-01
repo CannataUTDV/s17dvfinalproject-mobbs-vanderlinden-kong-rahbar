@@ -9,7 +9,8 @@ dashboardPage(
     sidebarMenu(
       menuItem("State Barchart", tabName = "barchart", icon = icon("dashboard")),
       menuItem("Political Affiliation Barchart", tabName = "PLbarchart", icon = icon("dashboard")),
-      menuItem("East vs West Coast Barchart", tabName = "EWbarchart", icon = icon("dashboard"))
+      menuItem("East vs West Coast Barchart", tabName = "EWbarchart", icon = icon("dashboard")),
+      menuItem("Crosstabs, KPIs, Parameters", tabName = "crosstab", icon = icon("dashboard"))
     )
   ),
   dashboardBody(    
@@ -62,8 +63,25 @@ dashboardPage(
                 ),
                 tabPanel("East vs West Coast Barchart", "Bars represent amount of stations in each format for each state", plotOutput("plot4", height=300))
               )
-      )
+      ),
       # End Barchart tab content.
+      
+      # Begin Crosstab tab content.
+      tabItem(tabName = "crosstab",
+              tabsetPanel(
+                tabPanel("Data",
+                         radioButtons("rb5", "Choose the Crosstab you want to see:",
+                                      c("Stations per Capita" = "capita",
+                                        "Male Listeners Ratio" = "male",
+                                        "Female Listeners Ratio" = "female"), inline=T),
+                         actionButton(inputId = "click5",  label = "To get data, click here"),
+                         hr(), # Add space after button.
+                         DT::dataTableOutput("data5")
+                ),
+                tabPanel("Crosstab", "This is a crosstab of the radio formats for the U.S.", plotOutput("plot5", height=1000))
+              )
+      )
+      # End Crosstab tab content.
     )
   )
 )
