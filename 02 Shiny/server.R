@@ -123,7 +123,7 @@ shinyServer(function(input, output) {
     theme(axis.text.x=element_text(angle=90, size=16, vjust=0.5)) + 
     theme(axis.text.y=element_text(size=16, hjust=0.5)) +
     geom_point(aes(x=Fem_KPI, y=Male_KPI, colour=State), size=2) +
-    geom_smooth(aes(x=Fem_KPI, y=Male_KPI, colour="grey"), method=lm,   # Add linear regression line
+    geom_smooth(aes(x=Fem_KPI, y=Male_KPI, colour="black"), method=lm,   # Add linear regression line
                 se=FALSE)    # Don't add shaded confidence region
   ggplotly(p)
   })

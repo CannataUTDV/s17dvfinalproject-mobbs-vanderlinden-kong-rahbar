@@ -71,6 +71,8 @@ Our scatter plots compare the amount of female listeners per capita to the amoun
 
 ### Shiny
 
+![](Shiny Images/Scatter plot.png)
+
 ## Crosstabs
 
 Crosstabs were really the first assignment where we utilized our listener KPIs. We created several crosstabs that allowed us to visualize the amount of listeners per capita for each format for each state. The listeners per capita were divided into three demographics - total, male, and female. This is an interesting way to see which formats are more popular among the different sexes.
