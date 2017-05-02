@@ -3,7 +3,7 @@ require(shiny)
 require(shinydashboard)
 require(plotly)
 
-dashboardPage(
+dashboardPage(skin = "green",
   dashboardHeader(
   ),
   dashboardSidebar(
