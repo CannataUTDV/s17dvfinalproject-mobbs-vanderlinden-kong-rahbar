@@ -6,8 +6,8 @@ require(shinydashboard)
 require(data.world)
 require(readr)
 require(DT)
+require(plotly)
 
-# The following query is for the select list in the Barcharts tab.
 
 nonaggstates = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
@@ -16,48 +16,53 @@ nonaggstates = query(
   from `PostETL-Radio`"
 )
 
+
+# The following query is for the select list in the Barcharts tabs. 
+
 regions2 = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
   dataset="jacobv/s-17-dv-final-project", type="sql",
   query="select Distinct State as D, State as R
   from `Census` where `2016_Party_Popular_Vote` = 'Liberal'"
-) # %>% View()
+) 
 
 regions2b = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
   dataset="jacobv/s-17-dv-final-project", type="sql",
   query="select Distinct State as D, State as R
   from `Census` where `2016_Party_Popular_Vote` = 'Conservative'"
-) # %>% View()
+) 
 
 regions3 = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
   dataset="jacobv/s-17-dv-final-project", type="sql",
   query="select Distinct State as D, State as R
   from `Census` where Coast = 'West'"
-) # %>% View()
+) 
 
 regions3b = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
   dataset="jacobv/s-17-dv-final-project", type="sql",
   query="select Distinct State as D, State as R
   from `Census` where Coast = 'East'"
-) # %>% View()
+) 
 
 regions = query(
   data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Omlhbm1vYmJzIiwiaXNzIjoiYWdlbnQ6aWFubW9iYnM6OmM1YWIzZjY4LTI4NDEtNDFhNS04OTlmLTNkZjhlMmRmYjlkNiIsImlhdCI6MTQ4NDg2NzI4Niwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.QBQa9S4qBJ1lU1iDfo8QVkY93BOXyHXQrzmYlfU0giWOgrLJuX9eELL8x3onRJk-SqNt4BC_U5UWitpUnewqqQ"),
   dataset="jacobv/s-17-dv-final-project", type="sql",
   query="select Distinct State as D, State as R
   from `PostETL-Radio`"
-) # %>% View()
-if(regions[1] == "Server error") {
-  print("Getting Regions from csv")
-  file_path = "www/SuperStoreOrders.csv"
-  df <- readr::read_csv(file_path) 
-  tdf1 = df %>% dplyr::distinct(Region) %>% arrange(Region) %>% dplyr::rename(D = Region)
-  tdf2 = df %>% dplyr::distinct(Region) %>% arrange(Region) %>% dplyr::rename(R = Region)
-  regions = bind_cols(tdf1, tdf2)
-}
+)
+
+# if(regions[1] == "Server error") {
+#   print("Getting Regions from csv")
+#   file_path = "www/SuperStoreOrders.csv"
+#   df <- readr::read_csv(file_path) 
+#   tdf1 = df %>% dplyr::distinct(Region) %>% arrange(Region) %>% dplyr::rename(D = Region)
+#   tdf2 = df %>% dplyr::distinct(Region) %>% arrange(Region) %>% dplyr::rename(R = Region)
+#   regions = bind_cols(tdf1, tdf2)
+# }
+
 region_list <- as.list(regions$D, regions$R)
 region_list <- append(list("All" = "All"), region_list)
 
@@ -69,7 +74,9 @@ region_list3 <- as.list(regions3$D, regions3$R)
 
 region_list3b <- as.list(regions3b$D, regions3b$R)
 
+# End Barcharts tabs list creation
 
+# output/input
 shinyServer(function(input, output) { 
   
   output$nonaggstates <- renderUI({selectInput("nonaggselect", "Choose States:", nonaggstates, multiple = TRUE)})
@@ -91,10 +98,42 @@ shinyServer(function(input, output) {
   # These widgets are for the crosstabs tab.
   online5 = reactive({input$rb5})
   
+  
   # Non-agg tab
   nonaggdf <- eventReactive(input$nonaggaction, {
-    # Non-agg stuff here
+    print("Getting from data.world")
+    query(
+      data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Om5lZ2lua3JhaGJhciIsImlzcyI6ImFnZW50Om5lZ2lua3JhaGJhcjo6YzM3YzNiMTgtZmViMC00NTQ0LTg1NTMtYzUzYWY1NTJjNjk2IiwiaWF0IjoxNDg0ODY3MDY5LCJyb2xlIjpbInVzZXJfYXBpX3dyaXRlIiwidXNlcl9hcGlfcmVhZCJdLCJnZW5lcmFsLXB1cnBvc2UiOnRydWV9.ncSnTmsVhrpE4sLgSQoKNjBhMw0QFpl-bYfpaE-Cdor-hCRgXLrdUZs3jM7TscKym9tjRQv0ozX2nEG82MtWHw"),
+      dataset="jacobv/s-17-dv-final-project", type="sql",
+      query="select p.State, p.Format, count(*) as Num_Stations, c.Total as sum_ppl, 
+      100000*(count(*)/c.Total) as KPI
+      from `PostETL-Radio` as p inner join `Census` as c on (p.State=c.State)
+      group by p.State, p.Format
+      order by p.State, p.Format")
   })
+  
+  output$nonaggdata <- renderDataTable({DT::datatable(nonaggdf(), rownames = FALSE,
+                                                   extensions = list(Responsive = TRUE, FixedHeader = TRUE)
+    )
+    })
+  
+  output$nonaggplot <- renderPlot({ggplot(nonaggdf()) + geom_boxplot(aes(x=Format, y=KPI)) + ylim(0, 6) + 
+      theme(axis.text.x=element_text(angle=90, size=14, hjust=0.5)) +
+      theme(axis.text.y=element_text(size=16, vjust=0.5))  +
+      geom_text(aes(x=Format, y=KPI, label=State), size=2.1)
+  })
+    
+  #   renderPlotly({
+  #   p <- ggplot(nonaggdf()) +
+  #     geom_boxplot(aes(x=Format, y=KPI, colour=KPI)) +
+  #     ylim(0, 6) +
+  #     theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
+  #  +
+  #geom_text(aes(x=Format, y=KPI, label=State), size=2.1)
+  #   ggplotly(p)
+  # })
+    
+  
   
   # Begin Barchart Tab ------------------------------------------------------------------
   df2 <- eventReactive(input$click2, {
@@ -111,7 +150,7 @@ shinyServer(function(input, output) {
         group by State, Format
         order by State, Format",
         queryParameters = region_list
-      ) # %>% View()
+      )
   })
   output$data2 <- renderDataTable({DT::datatable(df2(), rownames = FALSE,
                                                  extensions = list(Responsive = TRUE, FixedHeader = TRUE)
@@ -124,17 +163,12 @@ shinyServer(function(input, output) {
       geom_bar(stat = "identity") + 
       facet_wrap(~State, ncol=1) + 
       coord_flip() + 
-      # Add sum_sales, and (sum_sales - window_avg_sales) label.
-      geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount)),colour="black", hjust=-.5) #+
-    #geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount - window_avg_sales)),colour="blue", hjust=-2) +
-    # Add reference line with a label.
-    #geom_hline(aes(yintercept = round(mean_stations)), color="red") #+
-    #geom_text(aes( -1, window_avg_sales, label = window_avg_sales, vjust = -.5, hjust = -.25), color="red")
+      geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount)),colour="black", hjust=-.5)
   })
   # End Barchart Tab ___________________________________________________________
   
   
-  # Begin Barchart Tab ------------------------------------------------------------------
+  # Begin PLBarchart Tab ------------------------------------------------------------------
   df3 <- eventReactive(input$click3, {
     region_list2 <- append(input$selectedRegions2, input$selectedRegions2b)
     print("Getting from data.world")
@@ -147,7 +181,7 @@ shinyServer(function(input, output) {
                       group by c.`2016_Party_Popular_Vote`, p.Format
                       order by c.`2016_Party_Popular_Vote`, p.Format',
       queryParameters = region_list2
-    ) # %>% View()
+    ) 
   })
   output$data3 <- renderDataTable({DT::datatable(df3(), rownames = FALSE,
                                                  extensions = list(Responsive = TRUE, FixedHeader = TRUE)
@@ -161,15 +195,13 @@ shinyServer(function(input, output) {
       facet_wrap(~State, ncol=1) + 
       coord_flip() + 
       # Add sum_sales, and (sum_sales - window_avg_sales) label.
-      geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount)),colour="black", hjust=-.5) #+
-    #geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount - window_avg_sales)),colour="blue", hjust=-2) +
-    # Add reference line with a label.
-    #geom_hline(aes(yintercept = round(mean_stations)), color="red") #+
-    #geom_text(aes( -1, window_avg_sales, label = window_avg_sales, vjust = -.5, hjust = -.25), color="red")
+      geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount)),colour="black", hjust=-.5)
   })
-  # End Barchart Tab ___________________________________________________________
+  # End PLBarchart Tab ___________________________________________________________
   
-  # Begin Barchart Tab ------------------------------------------------------------------
+  
+  
+  # Begin EWBarchart Tab ------------------------------------------------------------------
   df4 <- eventReactive(input$click4, {
     region_list3 <- append(input$selectedRegions3, input$selectedRegions3b)
     
@@ -183,7 +215,7 @@ shinyServer(function(input, output) {
       group by c.Coast, p.Format
       order by c.Coast, p.Format',
       queryParameters = region_list3
-    ) # %>% View()
+    ) 
   })
   output$data4 <- renderDataTable({DT::datatable(df4(), rownames = FALSE,
                                                  extensions = list(Responsive = TRUE, FixedHeader = TRUE)
@@ -197,13 +229,9 @@ shinyServer(function(input, output) {
       facet_wrap(~State, ncol=1) + 
       coord_flip() + 
       # Add sum_sales, and (sum_sales - window_avg_sales) label.
-      geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount)),colour="black", hjust=-.5) #+
-    #geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount - window_avg_sales)),colour="blue", hjust=-2) +
-    # Add reference line with a label.
-    #geom_hline(aes(yintercept = round(mean_stations)), color="red") #+
-    #geom_text(aes( -1, window_avg_sales, label = window_avg_sales, vjust = -.5, hjust = -.25), color="red")
+      geom_text(mapping=aes(x=Format, y=Amount, label=round(Amount)),colour="black", hjust=-.5)
   })
-  # End Barchart Tab ___________________________________________________________
+  # End EWBarchart Tab ___________________________________________________________
   
   # Begin Crosstab Tab ------------------------------------------------------------------
   df5 <- eventReactive(input$click5, {
@@ -221,9 +249,8 @@ shinyServer(function(input, output) {
         end AS kpi
         from `PostETL-Radio` as p inner join `Census` as c on (p.State=c.State)
         group by p.State, p.Format
-        order by p.State, p.Format",
-        queryParameters = online5()
-      ) # %>% View()
+        order by p.State, p.Format"
+      )
     }
     else if(online5() == "male") {
       query(

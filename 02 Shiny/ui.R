@@ -20,14 +20,16 @@ dashboardPage(
       tabItem(tabName = "nonagg",
         tabsetPanel(
           tabPanel("Data",
-            h1("Non-Aggregated Measure Analysis"),
-            "Please select the states for which you'd like to see a format distribution.",
-            uiOutput("nonaggstates"),
-            actionButton(inputId = "nonaggaction", label="Get Data"),
+            h1("Non-Aggregated Measure Analysis"), 
+            actionButton(inputId = "nonaggaction", label="Get Data"), hr(),
             DT::dataTableOutput("nonaggdata")
-          )
+          ),
+          tabPanel("Box Plot", "This is a box-and-whiskers plot of the stations per capita for each format.", plotOutput("nonaggplot", height=1000))
         )
       ),
+      
+      # "Please select the states for which you'd like to see a format distribution.",
+      # uiOutput("nonaggstates"),
       
       # Begin Crosstab tab content.
       tabItem(tabName = "crosstab",
