@@ -1,12 +1,15 @@
 #ui.R
 require(shiny)
 require(shinydashboard)
+require(plotly)
 
 dashboardPage(
   dashboardHeader(
   ),
   dashboardSidebar(
     sidebarMenu(
+      menuItem("Scatter Plot", tabName = "scat", icon=icon("dashboard")),
+      menuItem("Aggregated Measure Analysis - Format Ratio by Population", tabName = "agg", icon=icon("dashboard")),
       menuItem("Non-Aggregated Measure Analysis - Stations per Capita", tabName = "nonagg", icon=icon("dashboard")),
       menuItem("Crosstabs - Crosstabs, KPIs, Parameters", tabName = "crosstab", icon = icon("dashboard")),
       menuItem("Barcharts - State", tabName = "barchart", icon = icon("dashboard")),
@@ -14,8 +17,30 @@ dashboardPage(
       menuItem("Barcharts - East vs West Coast Barchart", tabName = "EWbarchart", icon = icon("dashboard"))
     )
   ),
-  dashboardBody(    
+  dashboardBody(  
     tabItems(
+     
+      tabItem(tabName = "scat",
+              tabsetPanel(
+                tabPanel("Data",
+                         h1("Scatter Plot"), 
+                         actionButton(inputId = "scataction", label="Get Data"), hr(),
+                         DT::dataTableOutput("scatdata")
+                ),
+                tabPanel("Scatter Plot", "This is a scatter plot.", plotlyOutput("scatplot", height=1000))
+              )
+      ),
+      
+      tabItem(tabName = "agg",
+              tabsetPanel(
+                tabPanel("Data",
+                         h1("Aggregated Measure Analysis"), 
+                         actionButton(inputId = "aggaction", label="Get Data"), hr(),
+                         DT::dataTableOutput("aggdata")
+                ),
+                tabPanel("Histogram", "This is a stacked histogram.", plotlyOutput("aggplot", height=1000))
+              )
+      ),
       
       tabItem(tabName = "nonagg",
         tabsetPanel(
@@ -24,7 +49,7 @@ dashboardPage(
             actionButton(inputId = "nonaggaction", label="Get Data"), hr(),
             DT::dataTableOutput("nonaggdata")
           ),
-          tabPanel("Box Plot", "This is a box-and-whiskers plot of the stations per capita for each format.", plotOutput("nonaggplot", height=1000))
+          tabPanel("Box Plot", "This is a box-and-whiskers plot of the stations per capita for each format.", plotlyOutput("nonaggplot", height=1000))
         )
       ),
       

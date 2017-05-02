@@ -99,6 +99,33 @@ shinyServer(function(input, output) {
   online5 = reactive({input$rb5})
   
   
+  # Scat tab
+  scatdf <- eventReactive(input$scataction, {
+    print("Getting from data.world")
+    query(
+      data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Om5lZ2lua3JhaGJhciIsImlzcyI6ImFnZW50Om5lZ2lua3JhaGJhcjo6YzM3YzNiMTgtZmViMC00NTQ0LTg1NTMtYzUzYWY1NTJjNjk2IiwiaWF0IjoxNDg0ODY3MDY5LCJyb2xlIjpbInVzZXJfYXBpX3dyaXRlIiwidXNlcl9hcGlfcmVhZCJdLCJnZW5lcmFsLXB1cnBvc2UiOnRydWV9.ncSnTmsVhrpE4sLgSQoKNjBhMw0QFpl-bYfpaE-Cdor-hCRgXLrdUZs3jM7TscKym9tjRQv0ozX2nEG82MtWHw"),
+      dataset="jacobv/s-17-dv-final-project", type="sql",
+      query="select p.State, p.Format, count(*) as Num_Stations, c.Female, c.Male, 
+      100000*(count(*)/c.Female) as Fem_KPI, 100000*(count(*)/c.Male) as Male_KPI
+      from `PostETL-Radio` as p inner join `Census` as c on (p.State=c.State)
+      group by p.State
+      order by p.State")
+  })
+  
+  output$scatdata <- renderDataTable({DT::datatable(scatdf(), rownames = FALSE,
+                                                      extensions = list(Responsive = TRUE, FixedHeader = TRUE)
+  )
+  })
+  
+  output$scatplot <- renderPlotly({p <- ggplot(scatdf()) + 
+    theme(axis.text.x=element_text(angle=90, size=16, vjust=0.5)) + 
+    theme(axis.text.y=element_text(size=16, hjust=0.5)) +
+    geom_point(aes(x=Fem_KPI, y=Male_KPI, colour=State), size=2)
+  ggplotly(p)
+  })
+  
+  
+  
   # Non-agg tab
   nonaggdf <- eventReactive(input$nonaggaction, {
     print("Getting from data.world")
@@ -117,23 +144,24 @@ shinyServer(function(input, output) {
     )
     })
   
-  output$nonaggplot <- renderPlot({ggplot(nonaggdf()) + geom_boxplot(aes(x=Format, y=KPI)) + ylim(0, 6) + 
-      theme(axis.text.x=element_text(angle=90, size=14, hjust=0.5)) +
-      theme(axis.text.y=element_text(size=16, vjust=0.5))  +
-      geom_text(aes(x=Format, y=KPI, label=State), size=2.1)
+  output$nonaggplot <- renderPlotly({
+    p <- ggplot(nonaggdf()) +
+      geom_boxplot(aes(x=Format, y=KPI, color=KPI)) +
+      ylim(0, 6) +
+      theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
+    ggplotly(p)
   })
     
-  #   renderPlotly({
-  #   p <- ggplot(nonaggdf()) +
-  #     geom_boxplot(aes(x=Format, y=KPI, colour=KPI)) +
-  #     ylim(0, 6) +
-  #     theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
-  #  +
-  #geom_text(aes(x=Format, y=KPI, label=State), size=2.1)
-  #   ggplotly(p)
+  #   renderPlot({ggplot(nonaggdf()) + geom_boxplot(aes(x=Format, y=KPI)) + ylim(0, 6) + 
+  #     theme(axis.text.x=element_text(angle=90, size=14, hjust=0.5)) +
+  #     theme(axis.text.y=element_text(size=16, vjust=0.5))  +
+  #     geom_text(aes(x=Format, y=KPI, label=State), size=2.1)
   # })
     
-  
+
+    
+  #  +
+  #geom_text(aes(x=Format, y=KPI, label=State), size=2.1)
   
   # Begin Barchart Tab ------------------------------------------------------------------
   df2 <- eventReactive(input$click2, {
