@@ -48,7 +48,7 @@ Our non-aggregated measures analysis is a box-and-whiskers plot. The columns are
 
 ### Shiny
 
-TBD
+![](Shiny Images/non-aggregate.png)
 
 ## Aggregated Measures Analysis
 
