@@ -146,7 +146,7 @@ shinyServer(function(input, output) {
   })
   output$aggplot <- renderPlotly({
     a <- ggplot(aggdf()) +
-      geom_col(position = "stack", aes(x=sum_ppl, y=Num_Stations, color=KPI)) +
+      geom_col(position = "stack", aes(x=sum_ppl, y=Num_Stations, color=Format)) +
       theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
     ggplotly(a)
   })
