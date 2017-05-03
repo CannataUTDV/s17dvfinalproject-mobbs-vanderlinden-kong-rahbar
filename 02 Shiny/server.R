@@ -128,7 +128,28 @@ shinyServer(function(input, output) {
   ggplotly(p)
   })
   
-  
+  # Aggregated measures tab
+  aggdf <- eventReactive(input$aggaction, {
+    print("Getting from data.world")
+    query(
+      data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Om5lZ2lua3JhaGJhciIsImlzcyI6ImFnZW50Om5lZ2lua3JhaGJhcjo6YzM3YzNiMTgtZmViMC00NTQ0LTg1NTMtYzUzYWY1NTJjNjk2IiwiaWF0IjoxNDg0ODY3MDY5LCJyb2xlIjpbInVzZXJfYXBpX3dyaXRlIiwidXNlcl9hcGlfcmVhZCJdLCJnZW5lcmFsLXB1cnBvc2UiOnRydWV9.ncSnTmsVhrpE4sLgSQoKNjBhMw0QFpl-bYfpaE-Cdor-hCRgXLrdUZs3jM7TscKym9tjRQv0ozX2nEG82MtWHw"),
+      dataset="jacobv/s-17-dv-final-project", type="sql",
+      query="select p.State, p.Format, count(*) as Num_Stations, c.Total as sum_ppl,
+      100000*(count(*)/c.Total) as KPI
+      from `PostETL-Radio` as p inner join `Census` as c on (p.State=c.State)
+      group by p.State, p.Format
+      order by p.State, p.Format")
+  })
+  output$aggdata <- renderDataTable({DT::datatable(aggdf(), rownames = FALSE,
+                                                   extensions = list(Responsive = TRUE, FixedHeader = TRUE)
+  )
+  })
+  output$aggplot <- renderPlotly({
+    a <- ggplot(aggdf()) +
+      geom_col(position = "stack", aes(x=sum_ppl, y=Num_Stations, color=KPI)) +
+      theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
+    ggplotly(a)
+  })
   
   # Non-agg tab
   nonaggdf <- eventReactive(input$nonaggaction, {
@@ -142,11 +163,11 @@ shinyServer(function(input, output) {
       group by p.State, p.Format
       order by p.State, p.Format")
   })
-  
   output$nonaggdata <- renderDataTable({DT::datatable(nonaggdf(), rownames = FALSE,
                                                    extensions = list(Responsive = TRUE, FixedHeader = TRUE)
     )
     })
+ 
   
   output$nonaggplot <- renderPlotly({
     p <- ggplot(nonaggdf()) +
