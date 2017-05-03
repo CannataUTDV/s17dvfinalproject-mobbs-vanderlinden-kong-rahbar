@@ -1,5 +1,5 @@
 ---
-title: "Final Project"
+title: "Final Project - Radio Station and Census Data"
 author: "Ian Mobbs, Jacob Vanderlinden, Hyunsu Kong, Negin Rahbar"
 date: "4/30/2017"
 output:
@@ -7,7 +7,7 @@ output:
     toc: true
 ---
 
-## Final Project
+## Final Project - Radio Station and Census Data
 
 The focus of our projects have been around joining data from radio stations around the country with census data. We have a list of every radio station in the United States and information about it, as well as the census data from `data.world`.
 
