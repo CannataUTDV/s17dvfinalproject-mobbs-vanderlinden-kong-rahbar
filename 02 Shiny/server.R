@@ -134,8 +134,7 @@ shinyServer(function(input, output) {
     query(
       data.world(token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Om5lZ2lua3JhaGJhciIsImlzcyI6ImFnZW50Om5lZ2lua3JhaGJhcjo6YzM3YzNiMTgtZmViMC00NTQ0LTg1NTMtYzUzYWY1NTJjNjk2IiwiaWF0IjoxNDg0ODY3MDY5LCJyb2xlIjpbInVzZXJfYXBpX3dyaXRlIiwidXNlcl9hcGlfcmVhZCJdLCJnZW5lcmFsLXB1cnBvc2UiOnRydWV9.ncSnTmsVhrpE4sLgSQoKNjBhMw0QFpl-bYfpaE-Cdor-hCRgXLrdUZs3jM7TscKym9tjRQv0ozX2nEG82MtWHw"),
       dataset="jacobv/s-17-dv-final-project", type="sql",
-      query="select p.State, p.Format, count(*) as Num_Stations, c.Total as sum_ppl,
-      100000*(count(*)/c.Total) as KPI
+      query="select p.State, p.Format, count(*) as Num_Stations, c.Total as sum_ppl
       from `PostETL-Radio` as p inner join `Census` as c on (p.State=c.State)
       group by p.State, p.Format
       order by p.State, p.Format")
@@ -146,7 +145,7 @@ shinyServer(function(input, output) {
   })
   output$aggplot <- renderPlotly({
     a <- ggplot(aggdf()) +
-      geom_col(position = "stack", aes(x=sum_ppl, y=Num_Stations, color=Format)) +
+      geom_col(position = "stack", aes(x=sum_ppl/1000000, y=Num_Stations, color=Format)) +
       theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
     ggplotly(a)
   })

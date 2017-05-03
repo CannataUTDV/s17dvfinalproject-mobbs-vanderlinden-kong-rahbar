@@ -52,14 +52,17 @@ Our non-aggregated measures analysis is a box-and-whiskers plot. The columns are
 
 ## Aggregated Measures Analysis
 
-Our aggregated measures analysis is a histogram. We bin states by their total population, and count the amount of radio stations that belong to states in each bin. This allows us to see the relative frequency of station formats in smaller and larger states. For example, Religious radio stations (brown) become increasingly less popular as state size increases.
+Our aggregated measures analysis in Tableau is a histogram. We bin states by their total population, and count the amount of radio stations that belong to states in each bin. This allows us to see the relative frequency of station formats in smaller and larger states. For example, Religious radio stations (brown) become increasingly less popular as state size increases.
 
 ### Tableau
 ![](Tableau Images/Aggregated Measure Analysis - Format Ratio by Population.png)
 
 ### Shiny
 
-TBD
+The aggregated measures analysis in Shiny is a bar plot. The total number of radio stations for each state with the color showing the formats of the stations. States populations are shown in the X axis in units of 1 million. The general trend shows that the number of radio stations increases with population.
+
+![](Shiny Images/Aggregated measures - Stations vs Population.png)
+
 
 ## Scatter Plots
 
