@@ -11,6 +11,11 @@ output:
 
 The focus of our projects have been around joining data from radio stations around the country with census data. We have a list of every radio station in the United States and information about it, as well as the census data from `data.world`.
 
+### Important Links
+* [Shiny app](https://ianmobbs.shinyapps.io/final/)
+* [data.world](https://data.world/jacobv/s-17-dv-final-project)
+* [Github](https://github.com/CannataUTDV/s17dvfinalproject-mobbs-vanderlinden-kong-rahbar)
+
 ## ETL Script
 
 ```{r, code = readLines("../01 Data/ETL.R"), eval=FALSE}
@@ -81,7 +86,7 @@ Our scatter plots compare the amount of female listeners per capita to the amoun
 Crosstabs were really the first assignment where we utilized our listener KPIs. We created several crosstabs that allowed us to visualize the amount of listeners per capita for each format for each state. The listeners per capita were divided into three demographics - total, male, and female. This is an interesting way to see which formats are more popular among the different sexes.
 
 1. Stations per Capita
-  + Perfect example of [Simpson's Paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox). Country music stations in Wyoming appear tp ne average, until you observe the same ratio for both Male and Female listeners, where it appears to be high.
+  + Perfect example of [Simpson's Paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox). Country music stations in Wyoming appear to be average, until you observe the same ratio for both Male and Female listeners, where it appears to be high.
 2. Male Listeners per Capita
   + Mississippi has a higher ratio of male listeners for Pop and Contemporary stations than female listeners.
 3. Female Listeners per Capita
