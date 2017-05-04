@@ -348,7 +348,8 @@ shinyServer(function(input, output) {
       theme(axis.text.x=element_text(angle=90, size=14, hjust=0.5)) + 
       theme(axis.text.y=element_text(size=16, vjust=0.5)) + 
       geom_text(aes(x=Format, y=State, label=ratio), size=2.1) +
-      geom_tile(aes(x=Format, y=State, fill=kpi), alpha=0.5)
+      geom_tile(aes(x=Format, y=State, fill=kpi), alpha=0.5) +
+      scale_fill_discrete(breaks=c("High","Medium","Low"))
   })
 })
   # End Crosstab Tab ___________________________________________________________
