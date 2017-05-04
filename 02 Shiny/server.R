@@ -169,9 +169,11 @@ shinyServer(function(input, output) {
  
   
   output$nonaggplot <- renderPlotly({
-    p <- ggplot(nonaggdf()) +
-      geom_boxplot(aes(x=Format, y=KPI, color=KPI)) +
-      geom_point(aes(x=Format, y=KPI)) +
+    df <- nonaggdf()
+    print(df)
+    p <- ggplot(df) +
+      geom_boxplot(aes(x=Format, y=KPI)) +
+      geom_point(aes(x=Format, y=KPI, color=State)) +
       ylim(0, 6) +
       theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
     ggplotly(p)
