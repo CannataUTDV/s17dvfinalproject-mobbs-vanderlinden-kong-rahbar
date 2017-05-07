@@ -54,14 +54,6 @@ regions = query(
   from `PostETL-Radio`"
 )
 
-# if(regions[1] == "Server error") {
-#   print("Getting Regions from csv")
-#   file_path = "www/SuperStoreOrders.csv"
-#   df <- readr::read_csv(file_path) 
-#   tdf1 = df %>% dplyr::distinct(Region) %>% arrange(Region) %>% dplyr::rename(D = Region)
-#   tdf2 = df %>% dplyr::distinct(Region) %>% arrange(Region) %>% dplyr::rename(R = Region)
-#   regions = bind_cols(tdf1, tdf2)
-# }
 
 region_list <- as.list(regions$D, regions$R)
 region_list <- append(list("All" = "All"), region_list)
@@ -122,9 +114,10 @@ shinyServer(function(input, output) {
   output$scatplot <- renderPlotly({p <- ggplot(scatdf()) + 
     theme(axis.text.x=element_text(angle=90, size=16, vjust=0.5)) + 
     theme(axis.text.y=element_text(size=16, hjust=0.5)) +
+    labs(x="Ratio of Count of Stations to Female Population", y="Ratio of Count of Stations to Male Population") +
     geom_point(aes(x=Fem_KPI, y=Male_KPI, colour=State), size=2) +
     geom_smooth(aes(x=Fem_KPI, y=Male_KPI, colour="black"), method=lm,   # Add linear regression line
-                se=FALSE)    # Don't add shaded confidence region
+                se=FALSE)    # Don't add shaded confidence region  
   ggplotly(p)
   })
   
@@ -143,10 +136,11 @@ shinyServer(function(input, output) {
                                                    extensions = list(Responsive = TRUE, FixedHeader = TRUE)
   )
   })
+  
   output$aggplot <- renderPlotly({
     a <- ggplot(aggdf()) +
-      geom_col(position = "stack", aes(x=sum_ppl/1000000, y=Num_Stations, color=Format)) +
-      theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
+      geom_histogram(aes(x=sum_ppl/1000000, fill=Format, color=Format), binwidth=3) +
+      theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))+ labs(x="States Binned by Population", y="Count of Formats", colour="Format")
     ggplotly(a)
   })
   
@@ -175,7 +169,7 @@ shinyServer(function(input, output) {
       geom_boxplot(aes(x=Format, y=KPI)) +
       geom_point(aes(x=Format, y=KPI, color=State)) +
       ylim(0, 6) +
-      theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
+      theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5)) + labs(y="Ratio of Count of Each Format to Total Population")
     ggplotly(p)
   })
     
@@ -349,6 +343,7 @@ shinyServer(function(input, output) {
       theme(axis.text.y=element_text(size=16, vjust=0.5)) + 
       geom_text(aes(x=Format, y=State, label=ratio), size=2.1) +
       geom_tile(aes(x=Format, y=State, fill=kpi), alpha=0.5) +
+      labs(fill="Ratio of Format Count to Population") + 
       scale_fill_discrete(breaks=c("High","Medium","Low"))
   })
 })
