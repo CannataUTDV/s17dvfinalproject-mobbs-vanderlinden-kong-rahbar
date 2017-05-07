@@ -53,7 +53,7 @@ Our non-aggregated measures analysis is a box-and-whiskers plot. The columns are
 
 ### Shiny
 
-![](Shiny Images/non-aggregate.png)
+![](Shiny Images/box_plot.png)
 
 ## Aggregated Measures Analysis
 
@@ -66,7 +66,7 @@ Our aggregated measures analysis in Tableau is a histogram. We bin states by the
 
 The aggregated measures analysis in Shiny is a bar plot. The total number of radio stations for each state with the color showing the formats of the stations. States populations are shown in the X axis in units of 1 million. The general trend shows that the number of radio stations increases with population.
 
-![](Shiny Images/Aggregated measures - Stations vs Population.png)
+![](Shiny Images/histogram.png)
 
 
 ## Scatter Plots
@@ -79,7 +79,7 @@ Our scatter plots compare the amount of female listeners per capita to the amoun
 
 ### Shiny
 
-![](Shiny Images/Scatter plot.png)
+![](Shiny Images/shiny_scatter.png)
 
 ## Crosstabs
 
@@ -100,9 +100,9 @@ Crosstabs were really the first assignment where we utilized our listener KPIs. 
 
 ### Shiny
 
-1. ![](Shiny Images/Crosstabs - KPI - Stations per Capita.png)
-2. ![](Shiny Images/Crosstabs - KPI - Male Listeners Ratio.png)
-3. ![](Shiny Images/Crosstabs - KPI - Female Listeners Ratio.png)
+1. ![](Shiny Images/crosstab_capita.png)
+2. ![](Shiny Images/crosstab_male.png)
+3. ![](Shiny Images/crosstab_female.png)
 
 ## Barcharts
 
